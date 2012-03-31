@@ -1,0 +1,83 @@
+                                                                              PRR((Python) Round Robin))
+
+**********************************
+*       Indice dei contenuti     *
+**********************************
+
+- Intro
+- Manuale d'uso dell'applicativo
+- Elenco delle funzionalità
+- Others
+
+************************************
+*            Intro                 *
+************************************
+
+ Nell'ambito dei sistemi multitasking, più processi possono entrare in competizione per l'assegnazione delle risorse (CPU e I/O). Un esempio di algoritmo di scheduling è rappresentato dal Round Robin (RR). Secondo questo algoritmo, tutti i processi sono posti in una coda circolare e dispongono di un quanto di tempo prefissato. Si possono verificare le seguenti possibilità:
+- la sequenza di istruzioni di CPU è più lunga del quanto di tempo; il processo viene interrotto e riprenderà dall'istruzione successiva;
+- la sequenza di istruzioni di CPU e più breve del quanto di tempo; il processo "lascia" a disposizione del processo seguente la parte di quanto di tempo non usufruita;
+- la sequenza di istruzioni di CPU è uguale al quanto di tempo (situazione rara); la sequenza e il quanto di tempo scadono nello stesso istante. 
+
+*************************************
+* Manuale d'uso dell'applicativo    *
+*************************************
+Dopo aver scompattato il file,recarsi nella cartella BarrancaG403273/RR/src
+Un primo approccio, può essere ottenuto digitando il comando "python main.py " da riga di comando nel proprio sistema operativo, questo comando restituisce l'help dell'applicativo contenente tutti i parametri necessari(richiesti da linea di comando) per l'uso del programma.
+ 
+************************************
+* Laboratorio di Sistemi operativi *
+* Progetto: Scheduler Round Robin  *
+************************************
+
+Indicare da linea di comando:
+
+- numero dei processi da considerare durante la simulazione
+- durata minima della sequenza di Cpu
+- durata massima della sequenza di Cpu
+- durata minima della sequenza di I/O
+- durata massima della sequenza di I/O
+- quanto di tempo
+
+Esempio: python main.py 4 1 4 1 3 2
+
+
+Per iniziare una simulazione è possibile digitare da riga di comando la seguente istruzione, specificando il numero di processi da considerare durante la simulazione,la durata minima e massima della sequenza di CPU, durata minima e massima della sequenza di I/O ed il quanto di tempo :
+
+python main.py 4 1 4 1 3 2
+ 
+
+************************************
+*  Elenco delle funzionalità       *
+************************************
+
+Nella directory src sono presenti i seguenti file:
+
+- Main.py: modulo python principale che contiene al suo interno la funzione mani.
+- struct.py: modulo che contiene al suo interno la classe Processo e la classe Coda.
+- rr.py: modulo che contiene al suo interno la classe rr responsabile dell'intero funzionamento dell'applicativo
+- color_markup_string.py: modulo sviluppato da Simone Cansella (aka checkm) utilizzato nel progetto per colorare l'output 
+
+Classi ed elenco delle funzionalità realizzate:
+
+- Processo:classe dotata di un metodo costruttore che accetta come parametri il pid del processo che si vuole creare, il range della durata della sequenza di CPU,il range della durata della sequenza di I/O.
+Il metodo privato generaSequenza(), richiamato all'interno del costruttore, provvede a generare le sequenze alternate di CPU e I/O in modo pseudo-casuale. 
+Sono presenti, inoltre, una serie di metodi getter quali  getPID() che restituisce il PID del processo, getDurata() che restituisce la sequenza in testa alla lista che le contiene, getSequenza() che restituisce la lista delle sequenze del processo. Infine, il metodo popDurata() rimuove la sequenza di esecuzione in testa alla lista.
+
+- Coda:classe dotata di un metodo costruttore che inizializza una lista vuota, rappresentante una coda di CPU o I/O, che conterrà oggetti di tipo Processo. 
+Sono presenti una serie di metodi getter, quali getLunghezza() che restituisce la lunghezza della coda (il numero di processi presenti nella coda) e getElementoCoda() che restituisce un oggetto Processo della lista.
+Per compiere operazioni sulla lista che rappresenta la coda di CPU o I/O, sono disponibili i metodi aggiungiLista() con la funzione di estendere la coda accettando una lista come parametro, aggiungiProcesso() con la funzione di eseguire un append alla coda di un elemento Processo passato come parametro e, infine, il metodo rimuovi() con la funzionalità di rimuovere dalla testa della coda un elemento. 
+E' presente, infine, il metodo stampainfo() che esegue l'output su console del contenuto della coda.
+
+- rr:classe dotata di un metodo costruttore di default che inizializza quattro variabili che sono rispettivamente:
+-- flussoCpu: di tipo stringa, utilizzata per rappresentare il flusso della cpu
+-- flussoIO: di tipo stringa, utilizzata per rappresentare il flusso dei dispositivi di I/O
+-- durataCpu: di tipo intero,che scandisce il tempo passato in cpu dal processo
+-- durataIO: di tipo intero,che scandisce il tempo passato in I/O dal processo.
+L'intera procedura, realizzata da scheduler(), utilizza i metodi privati isMorto() per stabilire se un processo ha terminato la sua esecuzione,  dispatched() e cambiaContesto() per selezionare un processo dalle code di CPU o di I/O.
+E' presente,infine,il metodo stampa() che mostra su console istante per istante,lo stato della simulazione.
+
+************************************
+*  Others                          *
+************************************
+
+Nel progetto sono state utilizzate solo librerie e moduli reperite nei reposity pubblici per la versione 2.6.1 di Python esclusione fatta per il modulo color_markup_string.py scaricato dalla rete ed utilizzato esclusivamente per abbellire l'output sul terminale.
